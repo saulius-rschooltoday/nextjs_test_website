@@ -47,20 +47,44 @@ const Dashboard = () => {
   // END adding upload
 
 
-
-
-  const session = useSession();
-
-  const router = useRouter();
+const session = useSession();
+const router = useRouter();
   
+
+const [data, setData] = useState([]);
+const [err, setErr] = useState(false);
+const [isLoading, setIsLoading] = useState(false);
+
+useEffect(() => {
+  const getData = async () => {
+    setIsLoading(true);
+    const res = await fetch(`/api/posts?username=${session?.data?.user.name}`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      setErr(true);
+    }
+
+    const data = await res.json()
+
+    setData(data);
+    setIsLoading(false);
+  };
+  getData()
+}, []);
+
+
+
+
   //NEW WAY TO FETCH DATA
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  // const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-  const { data, mutate, error, isLoading } = useSWR(
-    `/api/posts?username=${session?.data?.user.name}`,
-    fetcher
-  );
-
+  // const { data, mutate, error, isLoading } = useSWR(
+  //   `/api/posts?username=${session?.data?.user.name}`,
+  //   fetcher
+  // );
+  // END NEW WAY
 
 
 
@@ -106,7 +130,7 @@ const Dashboard = () => {
           username: session.data.user.name,
         }),
       });
-      mutate();
+      // mutate();
       e.target.reset()
     } catch (err) {
       console.log(err);
@@ -118,7 +142,7 @@ const Dashboard = () => {
       await fetch(`/api/posts/${id}`, {
         method: "DELETE",
       });
-      mutate();
+      // mutate();
     } catch (err) {
       console.log(err);
     }
