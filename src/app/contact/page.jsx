@@ -21,7 +21,7 @@ const Contact = () => {
             className={styles.image}
           />
           <div className={styles.imgText}>
-            <h1 className={styles.imgTitle}>Let's Keep in Touch</h1>
+            <h1 className={styles.imgTitle}>Let&apos;s Keep in Touch</h1>
           </div>
         </div>
         <div className={styles.formContainer}>
