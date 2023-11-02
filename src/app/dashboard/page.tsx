@@ -1,10 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./page.module.css";
-import useSWR from "swr";
+//import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+
 
 
 
@@ -99,6 +100,22 @@ useEffect(() => {
 
   const handleSubmit = async (e) => {
 
+  
+    if (typeof window !== "undefined") {
+      console.log(window.location.href.replace(/^https?:\/\//, ""));
+    }
+
+    var host = '';
+    var proto = '';
+
+    if (typeof window !== "undefined") {
+      host = window.location.host; // to get domain
+      proto = window.location.protocol;
+    }
+  
+    //console.log(host);
+    //console.log(proto);
+
     e.preventDefault();
     const title = e.target[0].value;
     const desc = e.target[1].value;
@@ -113,7 +130,7 @@ useEffect(() => {
       img = img.substring(img.lastIndexOf('/')+1);
     }
     
-    img = 'http://localhost:3000/' + img;
+    img = `${proto}//${host}/` + img;
 
     const content = e.target[4].value;
 
