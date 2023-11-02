@@ -100,11 +100,6 @@ useEffect(() => {
 
   const handleSubmit = async (e) => {
 
-  
-    if (typeof window !== "undefined") {
-      console.log(window.location.href.replace(/^https?:\/\//, ""));
-    }
-
     var host = '';
     var proto = '';
 
@@ -130,7 +125,8 @@ useEffect(() => {
       img = img.substring(img.lastIndexOf('/')+1);
     }
     
-    img = `${proto}//${host}/` + img;
+    //img = `${proto}//${host}/` + img;
+    img = "/" + img;
 
     const content = e.target[4].value;
 
